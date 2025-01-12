@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>公告板 - {% if action == 'add' %}发布新公告{% else %}编辑公告{% endif %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}">
+</head>
+<body>
+    <h1>{% if action == 'add' %}发布新公告{% else %}编辑公告{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">提交</button>
+        <a href="{% url 'notice_list' %}">返回列表</a>
+    </form>
+</body>
+</html>

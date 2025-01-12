@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>公告板 - {{ notice.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    {% load tz %}
+</head>
+<body>
+    <h1>{{ notice.title }}</h1>
+    {{ notice.get_rendered_content|safe }}
+    <p>发布时间: {{ notice.pub_date|timezone:"Asia/Shanghai"|date:"Y年n月j日 H:i:s" }}</p>
+    <a href="{% url 'notice_list' %}">返回列表</a>
+</body>
+</html>

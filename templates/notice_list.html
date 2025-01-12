@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>公告板</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    {% load tz %}
+</head>
+<body>
+    <h1>公告列表</h1>
+    {% if user.is_authenticated %}
+        <a href="{% url 'notice_add' %}">发布新公告</a>
+        <br><br>
+    {% else %}
+        <a href="{% url 'admin:login' %}">管理员登录</a>
+        <br><br>
+    {% endif %}
+    <ul>
+        {% for notice in notices %}
+            <li>
+                <h2>{{ notice.title }}
+                 {% if notice.is_pinned %}<span class="pinned">[置顶]</span>{% endif %}
+                 {% if user.is_authenticated %}
+                     <button onclick="togglePin('{% url 'notice_pin' notice.id %}')">
+                         {% if notice.is_pinned %}取消置顶{% else %}置顶{% endif %}
+                     </button>
+                 {% endif %}
+                 </h2>
+                <p>发布时间: {{ notice.pub_date|timezone:"Asia/Shanghai"|date:"Y年n月j日 H:i:s" }}</p>
+                <a href="{% url 'notice_detail' notice.id %}">查看</a>
+                {% if user.is_authenticated %}
+                | <a href="{% url 'notice_edit' notice.id %}">编辑</a> |
+                <a href="{% url 'notice_delete' notice.id %}">删除</a>
+                {% endif %}
+                <button class="copy-button" onclick="copyLink('{{ request.build_absolute_uri|add:notice.get_absolute_url }}')">分享</button>
+            </li>
+        {% endfor %}
+    </ul>
+  <script>
+  function copyLink(link) {
+      navigator.clipboard.writeText(link);
+      alert("链接已复制到剪贴板!");
+  }
+  function togglePin(url) {
+      window.location.href = url;
+  }
+  </script>
+</body>
+</html>
