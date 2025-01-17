@@ -91,18 +91,27 @@ bulletinboard/
    source .venv/bin/activate  # Windows 使用 .venv\Scripts\activate
    pip install -r requirements.txt
    ```
-3. 迁移数据库：
+3. 初始化setting
 
    ```bash
+   python init.py True
+   # 若想要关闭调试模式，请使用
+   # python init.py False
+   ```
+4.迁移数据库：
+
+   ```bash
+   python manage.py migrate --run-syncdb
    python manage.py makemigrations
    python manage.py migrate
    ```
-4. 创建超级用户：
+
+5. 创建超级用户：
 
    ```bash
    python manage.py createsuperuser
    ```
-5. 启动开发服务器：
+6. 启动开发服务器：
 
    ```bash
    python manage.py runserver
