@@ -117,6 +117,21 @@ bulletinboard/
    python manage.py runserver
    ```
 
+### 一键脚本
+```bash
+git clone https://github.com/pengmoxiao/Django-Bulletinboard.git
+cd bulletinboard
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python init.py True
+python manage.py migrate --run-syncdb
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
+
 ### 使用方法
 
 1. 访问首页 (`http://127.0.0.1:8000/`) 查看公告列表。
